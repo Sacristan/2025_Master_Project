@@ -11,5 +11,13 @@ public class Collectable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"Trigger entered by: {other.name}");
+        Collect();
+    }
+
+    void Collect()
+    {
+        Debug.Log($"{name} got collected");
+        GameManager.instance.OnCollectableCollected(this);
+        Destroy(gameObject);
     }
 }
