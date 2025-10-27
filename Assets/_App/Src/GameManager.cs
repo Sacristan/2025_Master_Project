@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     List<Collectable> _collectables;
+    int totalCollectables;
 
     private void Awake()
     {
@@ -17,12 +18,15 @@ public class GameManager : MonoBehaviour
     {
         Collectable[] foundCollectables = FindObjectsByType<Collectable>(FindObjectsSortMode.None);
         _collectables = new(foundCollectables);
+        totalCollectables = _collectables.Count;
     }
 
     public void OnCollectableCollected(Collectable collectable)
     {
-        Debug.Log($"Collected {collectable.name}");
         _collectables.Remove(collectable);
+
+        int currentScore = totalCollectables - _collectables.Count;
+        Debug.Log($"Collected {collectable.name}. Score: {currentScore}/{totalCollectables}");
 
         if (_collectables.Count == 0)
         {
