@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class GameManager : MonoBehaviour
         if (_collectables.Count == 0)
         {
             Debug.Log("VICTORY!");
+            RestartCurrentLevel();
         }
+    }
+
+    void RestartCurrentLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
