@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    void Start()
-    {
-        Debug.Log("Game started");
-    }
-
+    public static event Action<Collectable> OnCollected;
+    
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"Trigger entered by: {other.name}");
@@ -17,7 +14,7 @@ public class Collectable : MonoBehaviour
     void Collect()
     {
         Debug.Log($"{name} got collected");
-        GameManager.instance.OnCollectableCollected(this);
+        OnCollected?.Invoke(this);
         Destroy(gameObject);
     }
 }

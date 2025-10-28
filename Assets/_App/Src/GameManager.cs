@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     List<Collectable> _collectables;
     int totalCollectables;
 
+    public bool IsReady { get; private set; }
+    public int CurrentCollectablesInLevel => _collectables.Count;
+    public int TotalCollectables => totalCollectables;
+
     private void Awake()
     {
         instance = this;
@@ -20,9 +24,17 @@ public class GameManager : MonoBehaviour
         Collectable[] foundCollectables = FindObjectsByType<Collectable>(FindObjectsSortMode.None);
         _collectables = new(foundCollectables);
         totalCollectables = _collectables.Count;
+
+        Collectable.OnCollected += OnCollectableCollected;
+        IsReady = true;
     }
 
-    public void OnCollectableCollected(Collectable collectable)
+    private void OnDestroy()
+    {
+        Collectable.OnCollected -= OnCollectableCollected;
+    }
+
+    void OnCollectableCollected(Collectable collectable)
     {
         _collectables.Remove(collectable);
 
