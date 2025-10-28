@@ -31,9 +31,14 @@ public class GameManager : MonoBehaviour
 
         if (_collectables.Count == 0)
         {
-            Debug.Log("VICTORY!");
-            RestartCurrentLevel();
+            OnGameWon();
         }
+    }
+
+    void OnGameWon()
+    {
+        Debug.Log("VICTORY!");
+        Invoke(nameof(RestartCurrentLevel), 2.5f);
     }
 
     void RestartCurrentLevel()
